@@ -16,44 +16,42 @@ export default function Login() {
 
   let isInvalid = !emailAddress || !password;
 
-  function handleSignup(event) {
+  async function handleSignup(event) {
     event.preventDefault();
-    doesUserExist(username).then((userExist) => {
-      console.log(userExist);
-      if (!userExist) {
-        firebase
+    const usersCount = await doesUserExist(username);
+    if (!usersCount) {
+      try {
+        let { user } = await firebase
           .auth()
-          .createUserWithEmailAndPassword(emailAddress, password)
-          .then(({ user }) => {
-            user.updateProfile({
-              displayName: username,
-            });
-            firebase
-              .firestore()
-              .collection("users")
-              .add({
-                userId: user.uid,
-                username: username.toLowerCase(),
-                fullname,
-                emailAddress: emailAddress.toLowerCase(),
-                following: ["2"],
-                followers: [],
-                dateCreated: Date.now(),
-              });
-            history.push(ROUTES.DASHBOARD);
-          })
-          .catch((error) => {
-            setError(error.message);
-            setUsername("");
-            setFullname("");
-            setPassword("");
-            setEmailAddress("");
+          .createUserWithEmailAndPassword(emailAddress, password);
+
+        user.updateProfile({
+          displayName: username,
+        });
+
+        await firebase
+          .firestore()
+          .collection("users")
+          .add({
+            userId: user.uid,
+            username: username.toLowerCase(),
+            fullname,
+            emailAddress: emailAddress.toLowerCase(),
+            following: ["2"],
+            followers: [],
+            dateCreated: Date.now(),
           });
-      } else {
-        setUsername("");
-        setError("That username is already taken, please try another.");
+        history.push(ROUTES.DASHBOARD);
+      } catch (error) {
+        setError(error.message);
+        setFullname("");
+        setPassword("");
+        setEmailAddress("");
       }
-    });
+    } else {
+      setUsername("");
+      setError("That username is already taken, please try another.");
+    }
   }
 
   useEffect(() => {
