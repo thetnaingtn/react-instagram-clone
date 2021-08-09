@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import * as Routes from "./constants/routes";
 import useAuthListener from "./hooks/user-auth-listener";
-import UserContext from "./constants/user";
+import UserContext from "./context/user";
 
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/sign-up"));
+const Dashboard = lazy(() => import("./pages/dashboard"));
 const NotFound = lazy(() => import("./pages/not-found"));
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Switch>
             <Route path={Routes.LOGIN} component={Login} />
             <Route path={Routes.SIGN_UP} component={SignUp} />
+            <Route path={Routes.DASHBOARD} component={Dashboard} />
             <Route component={NotFound} />
           </Switch>
         </Router>

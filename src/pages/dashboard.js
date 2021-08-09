@@ -6,8 +6,10 @@ export default function Dashboard() {
   return (
     <div className="bg-gray-background">
       <Header />
-      <Sidebar />
-      <Timeline />
+      <div className="grid">
+        <Sidebar />
+        <Timeline />
+      </div>
     </div>
   );
 }
