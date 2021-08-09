@@ -3,7 +3,7 @@ import FirebaseContext from "../context/firebase";
 
 export default function useAuthListener() {
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("authUser"))
+    JSON.parse(localStorage.getItem("authUser") || "{}")
   );
 
   const { firebase } = useContext(FirebaseContext);
@@ -14,7 +14,7 @@ export default function useAuthListener() {
         localStorage.setItem("authUser", JSON.stringify(authUser));
         setUser(authUser);
       } else {
-        localStorage.setItem("authUser", "");
+        localStorage.removeItem("authUser");
         setUser(null);
       }
     });
