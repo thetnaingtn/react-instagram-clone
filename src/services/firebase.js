@@ -1,11 +1,27 @@
 //eslint-disable-next-line
-import { firebase, FieldValue } from "../lib/firebase";
+import { firebase } from "../lib/firebase";
 
-export function doesUserExist(username) {
-  return firebase
+export async function doesUserExist(username) {
+  const result = await firebase
     .firestore()
     .collection("users")
     .where("username", "==", username)
-    .get()
-    .then((result) => result.docs.length);
+    .get();
+
+  return result.docs.length;
+}
+
+export async function getUserByUserId(userId) {
+  const result = await firebase
+    .firestore()
+    .collection("users")
+    .where("userId", "==", userId)
+    .get();
+
+  const user = result.docs.map((user) => ({
+    ...user.data(),
+    docId: user.id,
+  }));
+
+  return user;
 }
