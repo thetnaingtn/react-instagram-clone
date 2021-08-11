@@ -1,6 +1,7 @@
 import Skeleton from "react-loading-skeleton";
 
 import usePhotos from "../hooks/use-photos";
+import Post from "./post";
 
 export default function Timeline() {
   const { photos } = usePhotos();
@@ -13,8 +14,10 @@ export default function Timeline() {
           height={500}
           className="mb-5"
         ></Skeleton>
+      ) : photos?.length ? (
+        photos.map((photo) => <Post key={photo.docId} content={photo} />)
       ) : (
-        <div className="">{photos.username}</div>
+        <p>Follow to see photos</p>
       )}
     </div>
   );
