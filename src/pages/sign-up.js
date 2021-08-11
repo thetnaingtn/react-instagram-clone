@@ -8,7 +8,7 @@ import * as ROUTES from "../constants/routes";
 export default function Login() {
   const history = useHistory();
   const [username, setUsername] = useState("");
-  const [fullname, setFullname] = useState("");
+  const [fullName, setFullname] = useState("");
   const [error, setError] = useState(null);
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -35,13 +35,13 @@ export default function Login() {
           .add({
             userId: user.uid,
             username: username.toLowerCase(),
-            fullname,
+            fullName,
             emailAddress: emailAddress.toLowerCase(),
             following: ["2"],
             followers: [],
             dateCreated: Date.now(),
           });
-        history.push(ROUTES.DASHBOARD);
+        history.push(ROUTES.LOGIN);
       } catch (error) {
         setError(error.message);
         setFullname("");
@@ -88,7 +88,7 @@ export default function Login() {
             />
             <input
               type="text"
-              value={fullname}
+              value={fullName}
               onChange={({ target: { value } }) => setFullname(value)}
               aria-label="Enter your fullname"
               className="w-full text-sm text-gray-base border border-gray-primary rounded h-2 py-5 px-4 mr-3 mb-4"
