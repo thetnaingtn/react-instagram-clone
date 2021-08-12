@@ -25,7 +25,7 @@ export default function SuggestedProfile({
     <div className="flex flex-row items-center justify-between">
       <div className="flex items-center justify-between">
         <img
-          src={`images/avatars/${username}.jpg`}
+          src={`/images/avatars/${username}.jpg`}
           className="rounded-full mr-3 w-8 flex"
           alt={`${username}`}
         />
