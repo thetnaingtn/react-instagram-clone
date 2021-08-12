@@ -1,9 +1,10 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import * as Routes from "./constants/routes";
+import * as ROUTES from "./constants/routes";
 import useAuthListener from "./hooks/user-auth-listener";
 import UserContext from "./context/user";
+import ProtectedRoute from "./helpers/protected-route";
 
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/sign-up"));
@@ -17,9 +18,11 @@ function App() {
       <Suspense fallback={<p>Loading...</p>}>
         <Router>
           <Switch>
-            <Route path={Routes.LOGIN} component={Login} />
-            <Route path={Routes.SIGN_UP} component={SignUp} />
-            <Route path={Routes.DASHBOARD} component={Dashboard} />
+            <Route path={ROUTES.LOGIN} component={Login} />
+            <Route path={ROUTES.SIGN_UP} component={SignUp} />
+            <ProtectedRoute user={user} path={ROUTES.DASHBOARD}>
+              <Dashboard />
+            </ProtectedRoute>
             <Route component={NotFound} />
           </Switch>
         </Router>
