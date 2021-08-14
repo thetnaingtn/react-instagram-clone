@@ -36,20 +36,18 @@ export function HomeIcon() {
   );
 }
 
-export function HeartIcon({ toggleLike, handleToggleLike }) {
+export function HeartIcon({ handleToggleLike: handleOnClick, ...rest }) {
   return (
     <svg
-      onClick={handleToggleLike}
+      onClick={handleOnClick}
       onKeyDown={(event) => {
-        if (event.key === "Enter") handleToggleLike();
+        if (event.key === "Enter") handleOnClick();
       }}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      className={`w-8 mr-4 cursor-pointer ${
-        toggleLike ? "fill-red text-red-primary" : "text-black-light"
-      } select-none focus:outline-none`}
+      {...rest}
       tabIndex={0}
     >
       <path
@@ -62,16 +60,15 @@ export function HeartIcon({ toggleLike, handleToggleLike }) {
   );
 }
 
-export function CommentIcon({ handleInput }) {
+export function CommentIcon({ handleInput: handleOnClick, ...rest }) {
   return (
     <svg
-      onClick={handleInput}
+      onClick={handleOnClick}
       onKeyDown={(e) => {
-        if (e.Key === "Enter") handleInput();
+        if (e.Key === "Enter") handleOnClick();
       }}
-      className="w-8 text-black-light select-none cursor-pointer focus:outline-none"
+      {...rest}
       xmlns="http://www.w3.org/2000/svg"
-      fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
       tabIndex={0}

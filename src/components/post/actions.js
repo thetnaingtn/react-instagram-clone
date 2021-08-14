@@ -39,10 +39,16 @@ export default function Actions({
       <div className="flex justify-between p-4">
         <div className="flex">
           <HeartIcon
-            toggleLike={toggleLike}
+            className={`w-8 mr-4 cursor-pointer ${
+              toggleLike ? "fill-red text-red-primary" : "text-black-light"
+            } select-none focus:outline-none`}
             handleToggleLike={handleToggleLike}
           />
-          <CommentIcon handleInput={handleInput} />
+          <CommentIcon
+            fill="none"
+            className="w-8 text-black-light select-none cursor-pointer focus:outline-none"
+            handleInput={handleInput}
+          />
         </div>
       </div>
       <div className="p-4 py-0">
