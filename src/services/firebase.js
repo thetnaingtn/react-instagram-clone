@@ -1,4 +1,3 @@
-//eslint-disable-next-line
 import { FieldValue, firebase } from "../lib/firebase";
 
 export async function doesUserExist(username) {
@@ -9,6 +8,19 @@ export async function doesUserExist(username) {
     .get();
 
   return result.docs.length;
+}
+
+export async function getUserByUsername(username) {
+  const result = await firebase
+    .firestore()
+    .collection("users")
+    .where("username", "==", username)
+    .get();
+
+  return result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
 }
 
 export async function getUserByUserId(userId) {
@@ -107,4 +119,57 @@ export async function getPhotos(userId, following) {
   );
 
   return photoWithUserDetail;
+}
+
+export async function getUserPhotosByUserId(user) {
+  let result = await firebase
+    .firestore()
+    .collection("photos")
+    .where("userId", "==", user.userId)
+    .get();
+
+  return result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+}
+
+export async function isUserFollowingProfile(
+  loggedInUserUsername,
+  profileUserId
+) {
+  let result = await firebase
+    .firestore()
+    .collection("users")
+    .where("username", "==", loggedInUserUsername)
+    .where("following", "array-contains", profileUserId)
+    .get();
+
+  let [response = {}] = result.docs.map((item) => ({
+    ...item.data(),
+  }));
+
+  return response.userId;
+}
+
+export async function toggleFollow(
+  isFollowing,
+  loggedInUserDocId,
+  loggedInUserId,
+  profileUserId,
+  profileDocId
+) {
+  console.log(
+    isFollowing,
+    loggedInUserDocId,
+    loggedInUserId,
+    profileUserId,
+    profileDocId
+  );
+  await updateLoggedInUserFollowing(
+    isFollowing,
+    profileUserId,
+    loggedInUserDocId
+  );
+  await updateFollowedUserFollowers(isFollowing, profileDocId, loggedInUserId);
 }

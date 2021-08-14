@@ -29,7 +29,6 @@ export default function AddComment({
   };
 
   const handleFormSubmit = (e) => {
-    console.log("hey");
     comment.length >= 1 ? handleSubmitComment(e) : e.preventDefault();
   };
 
