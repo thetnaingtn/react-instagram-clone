@@ -3,12 +3,12 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const config = {
-  apiKey: "AIzaSyBjhJQgJaTfdbnqv4kB0j7o55ktRw3HQq4",
-  authDomain: "instagram-clone-34b9d.firebaseapp.com",
-  projectId: "instagram-clone-34b9d",
-  storageBucket: "instagram-clone-34b9d.appspot.com",
-  messagingSenderId: "1039355220774",
-  appId: "1:1039355220774:web:d19f93b8a9c5269c8d27e7",
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
 };
 
 const firebase = Firebase.initializeApp(config);
